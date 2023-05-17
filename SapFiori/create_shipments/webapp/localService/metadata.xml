@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:DataServices>
+        <Schema Namespace="CatalogService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="Conductor" EntityType="CatalogService.Conductor"/>
+                <EntitySet Name="Vehiculo" EntityType="CatalogService.Vehiculo"/>
+                <EntitySet Name="Envios" EntityType="CatalogService.Envios">
+                    <NavigationPropertyBinding Path="conductor" Target="Conductor"/>
+                    <NavigationPropertyBinding Path="vehiculo" Target="Vehiculo"/>
+                </EntitySet>
+                <EntitySet Name="Muebles" EntityType="CatalogService.Muebles"/>
+                <EntitySet Name="PaquetesMuebles" EntityType="CatalogService.PaquetesMuebles">
+                    <NavigationPropertyBinding Path="envio" Target="Envios"/>
+                </EntitySet>
+            </EntityContainer>
+            <EntityType Name="Conductor">
+                <Key>
+                    <PropertyRef Name="id"/>
+                </Key>
+                <Property Name="id" Type="Edm.String" MaxLength="6" Nullable="false"/>
+                <Property Name="Nombre" Type="Edm.String" MaxLength="30"/>
+                <Property Name="Apellidos" Type="Edm.String" MaxLength="30"/>
+                <Property Name="FechaNacimiento" Type="Edm.Date"/>
+                <Property Name="Ocupado" Type="Edm.Boolean"/>
+            </EntityType>
+            <EntityType Name="Vehiculo">
+                <Key>
+                    <PropertyRef Name="Matricula"/>
+                </Key>
+                <Property Name="Matricula" Type="Edm.String" MaxLength="7" Nullable="false"/>
+                <Property Name="Tipo" Type="Edm.String" MaxLength="30"/>
+                <Property Name="Modelo" Type="Edm.String" MaxLength="60"/>
+                <Property Name="FechaRevisionITV" Type="Edm.Date"/>
+                <Property Name="Ocupado" Type="Edm.Boolean"/>
+            </EntityType>
+            <EntityType Name="Envios">
+                <Key>
+                    <PropertyRef Name="id"/>
+                </Key>
+                <Property Name="id" Type="Edm.String" MaxLength="6" Nullable="false"/>
+                <Property Name="FechaSalida" Type="Edm.Date"/>
+                <Property Name="FechaLlegada" Type="Edm.Date"/>
+                <Property Name="Origen" Type="Edm.String" MaxLength="30"/>
+                <Property Name="Destino" Type="Edm.String" MaxLength="30"/>
+                <Property Name="idConductor" Type="Edm.String" MaxLength="6"/>
+                <Property Name="Matricula" Type="Edm.String" MaxLength="7"/>
+                <Property Name="Entregado" Type="Edm.Boolean"/>
+                <NavigationProperty Name="conductor" Type="CatalogService.Conductor"/>
+                <NavigationProperty Name="vehiculo" Type="CatalogService.Vehiculo"/>
+            </EntityType>
+            <EntityType Name="Muebles">
+                <Key>
+                    <PropertyRef Name="id"/>
+                </Key>
+                <Property Name="id" Type="Edm.String" MaxLength="6" Nullable="false"/>
+                <Property Name="Nombre" Type="Edm.String" MaxLength="50"/>
+                <Property Name="Tipo" Type="Edm.String" MaxLength="50"/>
+                <Property Name="Material" Type="Edm.String" MaxLength="50"/>
+                <Property Name="Dimensiones" Type="Edm.String" MaxLength="50"/>
+                <Property Name="Peso" Type="Edm.String" MaxLength="7"/>
+            </EntityType>
+            <EntityType Name="PaquetesMuebles">
+                <Key>
+                    <PropertyRef Name="id"/>
+                </Key>
+                <Property Name="id" Type="Edm.String" MaxLength="6" Nullable="false"/>
+                <Property Name="idMueble" Type="Edm.String" MaxLength="6"/>
+                <Property Name="Nombre" Type="Edm.String" MaxLength="50"/>
+                <Property Name="Tipo" Type="Edm.String" MaxLength="50"/>
+                <Property Name="Material" Type="Edm.String" MaxLength="50"/>
+                <Property Name="Dimensiones" Type="Edm.String" MaxLength="50"/>
+                <Property Name="Peso" Type="Edm.String" MaxLength="7"/>
+                <Property Name="Cantidad" Type="Edm.Int32"/>
+                <Property Name="idEnvio" Type="Edm.String" MaxLength="6"/>
+                <NavigationProperty Name="envio" Type="CatalogService.Envios"/>
+            </EntityType>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
